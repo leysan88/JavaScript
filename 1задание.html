@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <!-- Тег meta для указания кодировки -->
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+
+	<p><b>Первое число:</b><br><input id="num1" type="text" size="40"></p>
+	<p><b>Второе число:</b><br><input id="num2" type="text" size="40"></p>
+	<p><input type="button" id="Butt"  value="Сложить"></p>
+  
+	<script>
+		document.addEventListener("DOMContentLoaded", function(){
+			document.getElementById('Butt').addEventListener("click", function(){
+				
+				var num1 = document.getElementById('num1').value;
+				var num2 = document.getElementById('num2').value;
+				alert(parseInt(num1) + parseInt(num2));
+			})
+		});
+		
+	
+	</script>
+
+</body>
+
+</html>
