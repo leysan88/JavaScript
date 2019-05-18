@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <!-- Тег meta для указания кодировки -->
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+
+	<p><b>Исходное полжение:</b><br><input id="coor" type="text" size="40"></p>
+	<p><input type="button" id="Butt"  value="Ок"></p>
+	<script>
+		/**
+		координаты цикла хода фигур
+		тип фигур : [[
+		   горизонтальное,
+		   вертикальное,
+		   кол-во повторений
+		]]
+		**/
+		
+		var type = {
+			horse:[
+				[
+					1,2,1
+				],
+				[
+					-1,-2,1
+				],
+				[
+					2,1,1
+				],
+				[
+					-2,-1,1
+				],
+				[
+					-2,1,1
+				],
+				[
+					1,-2,1
+				],
+				[
+					2,-1,1
+				],
+				[
+					-1,2,1
+				]
+			],
+			rook:[// ладья
+				[
+					1,0,0
+				],
+				[
+					-1,0,0
+				],
+				[
+					0,1,0
+				],
+				[
+					0,-1,0
+				]
+			]
+		};
+		var activeCoords = [];
+		document.addEventListener("DOMContentLoaded", function(){
+			document.getElementById('Butt').addEventListener("click", function(){
+				var coor = document.getElementById('coor').value;
+				var result = getCoord('horse',coor);
+				setCoordToChess(result);
+			});
+			var nodes = document.querySelector('*.chess').childNodes;
+			for(var i = 0, len = nodes.length ; i < len ; i++){
+				nodes[i].addEventListener("click", function(){
+					var coor = this.getAttribute('id')
+					document.getElementById('coor').value = coor;
+					var result = getCoord('horse',coor);
+					setCoordToChess(result);
+				})
+			}
+		});
+		function getCoord(_type,_coor){
+			var g = _coor[0].charCodeAt() - 64;
+			var v = parseInt(_coor[1]);
+			var result = [];
+			var wh = type[_type];
+			for(var i = 0, len = wh.length ; i < len ; i++){
+				var iter = wh[i][2];
+				var t1 = g;
+				var t2 = v;
+				for(var l = 0;(iter == 0 || l < iter);l++){
+					t1 += wh[i][0];
+					t2 += wh[i][1];
+					if((t1 > 8 || t2 > 8) || (t1 < 1 || t2 < 1)){
+						break;
+					}else{
+						result.push(String.fromCharCode(64 + t1) + t2);
+					}
+				}
+			}
+			return result;
+		}
+		function setCoordToChess(_arr){
+			for(var i = 0, len = activeCoords.length ; i < len ; i++){
+				document.getElementById(activeCoords[i]).removeAttribute('mot');
+			}
+			activeCoords = [];
+			for(var i = 0, len = _arr.length ; i < len ; i++){
+				document.getElementById(_arr[i]).setAttribute('mot', '1');
+				activeCoords.push(_arr[i]);
+			}
+		}
+	</script>
+	<div class="chess">
+	   <div id="A8"></div>
+	   <div id="B8"></div>
+	   <div id="C8"></div>
+	   <div id="D8"></div>
+	   <div id="E8"></div>
+	   <div id="F8"></div>
+	   <div id="G8"></div>
+	   <div id="H8"></div>
+	   <div id="A7"></div>
+	   <div id="B7"></div>
+	   <div id="C7"></div>
+	   <div id="D7"></div>
+	   <div id="E7"></div>
+	   <div id="F7"></div>
+	   <div id="G7"></div>
+	   <div id="H7"></div>
+	   <div id="A6"></div>
+	   <div id="B6"></div>
+	   <div id="C6"></div>
+	   <div id="D6"></div>
+	   <div id="E6"></div>
+	   <div id="F6"></div>
+	   <div id="G6"></div>
+	   <div id="H6"></div>
+	   <div id="A5"></div>
+	   <div id="B5"></div>
+	   <div id="C5"></div>
+	   <div id="D5"></div>
+	   <div id="E5"></div>
+	   <div id="F5"></div>
+	   <div id="G5"></div>
+	   <div id="H5"></div>
+	   <div id="A4"></div>
+	   <div id="B4"></div>
+	   <div id="C4"></div>
+	   <div id="D4"></div>
+	   <div id="E4"></div>
+	   <div id="F4"></div>
+	   <div id="G4"></div>
+	   <div id="H4"></div>
+	   <div id="A3"></div>
+	   <div id="B3"></div>
+	   <div id="C3"></div>
+	   <div id="D3"></div>
+	   <div id="E3"></div>
+	   <div id="F3"></div>
+	   <div id="G3"></div>
+	   <div id="H3"></div>
+	   <div id="A2"></div>
+	   <div id="B2"></div>
+	   <div id="C2"></div>
+	   <div id="D2"></div>
+	   <div id="E2"></div>
+	   <div id="F2"></div>
+	   <div id="G2"></div>
+	   <div id="H2"></div>
+	   <div id="A1"></div>
+	   <div id="B1"></div>
+	   <div id="C1"></div>
+	   <div id="D1"></div>
+	   <div id="E1"></div>
+	   <div id="F1"></div>
+	   <div id="G1"></div>
+	   <div id="H1"></div>
+	</div>
+	<style>
+		.chess{
+			display: grid;
+			grid-template-columns: repeat(8, 40px)
+		}
+		.chess > div{
+			height:40px;
+		}
+		*[mot="1"]{
+			background-color: red !important;
+		}
+		.chess > div{
+			border:1px solid black ;
+			bordber-collapse:collapse;
+		}
+		.chess > div:nth-child(-n+8):nth-child(even){
+			background-color: black;
+		}
+		.chess > div:nth-child(n+9):nth-child(-n+16):nth-child(odd) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+17):nth-child(-n+24):nth-child(even) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+25):nth-child(-n+32):nth-child(odd) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+33):nth-child(-n+40):nth-child(even) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+41):nth-child(-n+48):nth-child(odd) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+49):nth-child(-n+56):nth-child(even) {
+			background-color: black;
+		}
+		.chess > div:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
+			background-color: black;
+		}
+	</style>
+</body>
+
+</html>
